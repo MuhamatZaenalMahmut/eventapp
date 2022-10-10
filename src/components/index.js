@@ -12,6 +12,7 @@ import FormInputSwitch from './forms/switch';
 import FormPicker from './forms/picker';
 import FormTextArea from './forms/textarea';
 import Loading from './loading';
+import ModalUser from './modal/user';
 import MyView from './myView';
 import PlaceholderEvent from './placeholder/event';
 import PlaceholderTicket from './placeholder/ticket';
@@ -31,6 +32,7 @@ export {
     FormPicker,
     FormTextArea,
     Loading,
+    ModalUser,
     MyView,
     PlaceholderEvent,
     PlaceholderTicket
