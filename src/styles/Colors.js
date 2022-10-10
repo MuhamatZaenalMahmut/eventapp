@@ -1,0 +1,10 @@
+export const BACKGROUND     = "#F4F5FC";
+export const BLACK          = "#1B1C21";
+export const PRIMARY        = "#262931";
+export const WHITE          = "#FFFFFF";
+export const WHITE_DARK     = "#E4E4E4";
+export const GRAY           = "#85868B";
+export const GRAY_SOFT      = "#E0E0E0";
+export const GRAY_LABEL     = "#9B9CA4";
+export const GRAY_LIGHT     = "#F2F4F3";
+export const DANGER         = "#FE7878";

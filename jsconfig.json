@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@root": ["srcsss/*"],
+            "@actions": ["srcsss/actions/*"],
+            "@assets": ["srcsss/assets/*"],
+            "@components": ["srcsss/components/*"],
+            "@constants": ["srcsss/constants/*"],
+            "@helper": ["srcsss/helper/*"],
+            "@navigations": ["srcsss/navigations/*"],
+            "@reducers": ["srcsss/reducers/*"],
+            "@scenes": ["srcsss/scenes/*"],
+            "@stores": ["srcsss/stores/*"],
+            "@styles": ["srcsss/styles/*"],
+            "@utils": ["srcsss/utils/*"]
+        }
+    }
+}
