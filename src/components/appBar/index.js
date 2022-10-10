@@ -13,7 +13,7 @@ const AppBar = ({
 }) => {
     return (
         <>
-        <View style={[styles.header, full ? styles.full : {backgroundColor: Colors.WHITE}]}>
+        <View style={[styles.header, full ? styles.full : {backgroundColor: Colors.BACKGROUND}]}>
             <TouchableOpacity activeOpacity={0.5} style={styles.btnBack} onPress={onBackCustom == null ? () => navigation.goBack() : onBackCustom}>
                 <Icon as={Feather} name={'chevron-left'} color={Colors.BLACK} size={RFValue(5)}/>
             </TouchableOpacity>

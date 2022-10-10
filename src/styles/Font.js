@@ -103,7 +103,6 @@ export default StyleSheet.create({
         color: Colors.BLACK,
     },
     label:{
-        marginBottom: RFValue(8),
         fontFamily:'GothamRounded-Medium',
         fontSize: RFValue(14),
         color: Colors.BLACK,
@@ -114,8 +113,8 @@ export default StyleSheet.create({
         color: Colors.GREY,
     },
     desc:{
-        fontFamily:'GothamRounded-Medium',
-        fontSize: RFValue(12),
+        fontFamily:'GothamRounded-Light',
+        fontSize: RFValue(13),
         color: Colors.GRAY,
     },
     errorText:{
@@ -126,7 +125,6 @@ export default StyleSheet.create({
     },
     header:{
         marginVertical: RFValue(10),
-        marginHorizontal: RFValue(15),
         fontFamily:'GothamRounded-Bold',
         fontSize: RFValue(25),
         color: Colors.BLACK,

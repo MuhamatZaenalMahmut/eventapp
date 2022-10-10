@@ -6,7 +6,7 @@ import { Colors, Font } from "@styles";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RFValue } from "react-native-responsive-fontsize";
-import { Ticket, Profile, Home, Event, EventForm, Scanner, EventDetail, TicketDetail } from "@scenes";
+import { Ticket, Profile, Home, Event, EventForm, Scanner, EventDetail } from "@scenes";
 import Octicons from 'react-native-vector-icons/Octicons';
 
 const Stack = createStackNavigator();
@@ -132,13 +132,11 @@ const AppNavigator = ({ auth }) => {
 
     return (
         <Stack.Navigator>
-            <Stack.Screen name="UsersTabs" component={UsersTabs} options={{headerShown: false}}/>
-            {/* <Stack.Screen name="CompanyTabs" component={CompanyTabs} options={{headerShown: false}}/> */}
+            {/* <Stack.Screen name="UsersTabs" component={UsersTabs} options={{headerShown: false}}/> */}
+            <Stack.Screen name="CompanyTabs" component={CompanyTabs} options={{headerShown: false}}/>
             <Stack.Screen name="EventForm" component={EventForm} options={{headerShown: false}}/>
             <Stack.Screen name="EventDetail" component={EventDetail} options={{headerShown: false}}/>
-            <Stack.Screen name="TicketDetail" component={TicketDetail} options={{headerShown: false}}/>
             <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}}/>
-
         </Stack.Navigator>
     );
 };

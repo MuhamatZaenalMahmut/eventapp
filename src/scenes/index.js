@@ -8,7 +8,6 @@ import Scanner from './company/scanner';
 import Profile from './profile';
 import Home from './user/home';
 import Ticket from './user/ticket';
-import TicketDetail from './user/ticket/detail';
 
 export {
     OnBoarding,
@@ -20,6 +19,5 @@ export {
     Scanner,
     Profile,
     Home,
-    Ticket,
-    TicketDetail
+    Ticket
 }

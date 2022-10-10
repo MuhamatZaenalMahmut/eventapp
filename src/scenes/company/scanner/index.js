@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import { Image, View, StyleSheet, ScrollView, Text } from 'react-native';
+import { Image, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Colors, StC } from "@styles";
 import { Icons } from "@assets";
 import { BaseContainer, ButtonFlex } from '@components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SignIn } from '@actions';
 import store from "@stores/store";
+import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
-import BarcodeMask from 'react-native-barcode-mask';
-
 
 const Scanner = ({ navigation }) => {
     
@@ -16,14 +15,15 @@ const Scanner = ({ navigation }) => {
         navigation.navigate(uri);
     };
 
-    const onBarCodeRead = (scanResult) => {
+    const onBarCodeRead = (e) => {
         // const {scanning} = this.state
         // if(scanResult && scanning){
         //     Vibration.vibrate(50 * 1)
         //     this.checkQR(scanResult.data)
         // }
 
-        alert('6789')
+        
+        alert(e.data)
     }
 
 
@@ -31,31 +31,24 @@ const Scanner = ({ navigation }) => {
 
     return (      
         <BaseContainer>
-            <View style={styles.authCont}>
-                <RNCamera
-                    style={styles.preview}
-                    type={RNCamera.Constants.Type.back}
-                    autoFocus={RNCamera.Constants.AutoFocus.on}
-                    androidCameraPermissionOptions={{
-                        title: 'Permission to use camera',
-                        message: 'We need your permission to use your camera',
-                        buttonPositive: 'Ok',
-                        buttonNegative: 'Cancel',
-                    }}
-                    androidRecordAudioPermissionOptions={{
-                        title: 'Permission to use audio recording',
-                        message: 'We need your permission to use your audio',
-                        buttonPositive: 'Ok',
-                        buttonNegative: 'Cancel',
-                    }}
-                    onBarCodeRead={()=> onBarCodeRead}
-                >
-                    <BarcodeMask
-                        width={300} height={300} showAnimatedLine={true} outerMaskOpacity={0.3}
-                    />
-                </RNCamera>
+            {/* <View style={styles.authCont}> */}
+            <QRCodeScanner
+                onRead={onBarCodeRead}
+                topContent={
+                <Text style={styles.centerText}>
+                    Go to{' '}
+                    <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
+                    your computer and scan the QR code.
+                </Text>
+                }
+                bottomContent={
+                <TouchableOpacity style={styles.buttonTouchable}>
+                    <Text style={styles.buttonText}>OK. Got it!</Text>
+                </TouchableOpacity>
+                }
+            />
 
-            </View>
+            {/* </View> */}
         </BaseContainer>  
     )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image, FlatList, TouchableOpacity, View, Text } from 'react-native';
 import { Fab, Icon } from 'native-base';
-import { BaseContainer, AppBar, PlaceholderEvent, ButtonFab } from '@components';
+import { BaseContainer, CardEvent, PlaceholderEvent, ButtonFab } from '@components';
 import { StC, Colors, Font} from "@styles";
 import { connect } from "react-redux";
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -82,25 +82,17 @@ function Home({ event, navigation }) {
 
     return (
         <BaseContainer>
-            <Text style={Font.header}>{'List Event'}</Text>
+            <Text style={[Font.header, {marginHorizontal: RFValue(15)}]}>{'List Event'}</Text>
             {isLoading ? 
                 <PlaceholderEvent/>
                 : 
                 <FlatList
                     data={data}
                     renderItem={(({ item, index }) => (
-                        <TouchableOpacity onPress={()=> getDetail(item.id)} style={styles.card}>
-                            <Image source={{uri: item.cover}} style={styles.cover}/>
-                            <View style={{paddingLeft: RFValue(10), flex:1}}>
-                                <Text style={styles.title} numberOfLines={2}>{item.name}</Text>
-                                <Text style={styles.desc}>{item.date} {item.time}</Text>
-                                <Text style={styles.desc}>{item.location}</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <CardEvent item={item} onPress={()=> getDetail()}/>
                     ))}
                 />
             }
-            <ButtonFab label="Add Event" onPress={()=> navigation.navigate('EventForm')}/>
         </BaseContainer>
     )
 }
@@ -111,28 +103,3 @@ const mapStateToProps = function (state) {
 }
   
 export default connect(mapStateToProps)(Home);
-
-const styles = StyleSheet.create({
-    content:{
-        paddingHorizontal: RFValue(15)
-    },
-    card:{
-        ... StC.flexR,
-        marginBottom: RFValue(15),
-        marginHorizontal: RFValue(15),
-    },
-    cover:{
-        width: RFValue(90),
-        height: RFValue(75),
-        borderRadius: RFValue(10)
-    },
-    fab:{
-        marginBottom: RFValue(60),
-        backgroundColor: Colors.PRIMARY
-    },
-    title:{
-        ... Font.F13,
-        ... Font.Medium,
-        ... Font.BLACK
-    }
-})

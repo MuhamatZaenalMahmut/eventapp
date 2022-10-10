@@ -2,6 +2,8 @@ import AppBar from './appBar';
 import BaseContainer from './baseContainer';
 import ButtonFab from './button/fab';
 import ButtonFlex from './button/flex';
+import CardEvent from './cards/event';
+import CardTicket from './cards/ticket';
 import FormInput from './forms/input';
 import FormInputCurrency from './forms/currency';
 import FormInputPicker from './forms/inputPicker';
@@ -17,6 +19,8 @@ export {
     BaseContainer,
     ButtonFab,
     ButtonFlex,
+    CardEvent,
+    CardTicket,
     FormInput,
     FormInputCurrency,
     FormInputPicker,

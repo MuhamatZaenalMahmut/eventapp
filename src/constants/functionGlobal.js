@@ -26,7 +26,7 @@ export const currencyFloat = (number) => {
 }
 
 export const formatDate = (date, short) => {
-    return short ? moment(date).format('DD MMM YYYY') : moment(date).format('DD MMMM YYYY')
+    return moment(date).format('DD MMM YYYY')
 }
 
 export const onRotate = () => {

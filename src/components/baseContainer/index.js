@@ -9,7 +9,7 @@ const BaseContainer = ({
     return (
         <Fragment>
             <SafeAreaView style={styles.bottomSafeArea}>
-                <StatusBar barStyle="dark-content" backgroundColor={Colors.WHITE} />
+                <StatusBar barStyle="dark-content" backgroundColor={Colors.BACKGROUND} />
                 {children}
             </SafeAreaView>
         </Fragment>
@@ -22,10 +22,10 @@ export default BaseContainer;
 const styles = StyleSheet.create({
     topSafeArea: {
         flex: 0, 
-        backgroundColor: Colors.WHITE
+        backgroundColor: Colors.BACKGROUND
     }, 
     bottomSafeArea: {
         flex:1,
-        backgroundColor: Colors.WHITE
+        backgroundColor: Colors.BACKGROUND
     }
 });
