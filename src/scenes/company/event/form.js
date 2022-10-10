@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 import { Font, StC } from "@styles";
-import { mailRegex, generateUserId } from "@constants";
+import { showToast } from "@constants";
 import { BaseContainer, ButtonFlex, FormTextArea, AppBar, FormInput, FormInputCurrency, FormInputPicker } from '@components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Formik } from 'formik';
-import authUtils from '@utils/AuthUtils';
+import { connect } from "react-redux";
 import * as yup from 'yup';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+import eventsUtils from '@utils/EventsUtils';
 
-const EventForm = ({ navigation }) => {
+const EventForm = ({ navigation, users }) => {
     
-    const [isSwitch, setIsSwitch]           = useState(false)
+    const [loading, setLoading]             = useState(false)
     const [description, setDescription]     = useState('')
     const [price, setPrice]                 = useState('')
     const [date, setDate]                   = useState('')
@@ -24,38 +25,47 @@ const EventForm = ({ navigation }) => {
     const dataValidationSchema = yup.object().shape({
         name: yup
             .string()
-            .min(5, ({ min }) => `Name ${min} character`)
+            .min(2, ({ min }) => `Name ${min} character`)
             .required('Name is required'),
         location: yup
             .string()
             .required('Location is required'),
     })
 
-    const actionNavigation = (uri) => {
-        navigation.navigate(uri)
-    }
-
-    const handleSignIn = async (value) => {
-        value.type  = isSwitch ? 'company' : 'user',
-        value.key   = generateUserId()
-
-        await authUtils.signin(value)
-    }
-
     const onChange = (value) => {
-        type == 'date' ? setDate(moment(value)) : setTime(moment(value).format("HH:mm"));
+        type == 'date' ? setDate(moment(value).format('YYYY-MM-DD')) : setTime(moment(value).format("HH:mm"));
         setIsPickerShow(false);
     };
 
+    const handleSave = async (value) => {
+
+        if(description && price && date && time){
+            value.description   = description
+            value.price         = price
+            value.date          = date
+            value.time          = time
+            value.userID        = users.users.key
+    
+            setLoading(true)
+            await eventsUtils.add(value)
+    
+            setTimeout(() => {
+                setLoading(false)
+                navigation.goBack()
+            }, 1000)
+        } else {
+            showToast('Field is required')
+        }
+    }
+
     return (      
-        <BaseContainer>
+        <BaseContainer loading={loading}>
             <AppBar title="Event Form" navigation={navigation}/>
-            
             <Formik
                 validationSchema={dataValidationSchema}
                 isValidating={true}
                 initialValues={{ name:'', location:''}}
-                onSubmit={(value) => handleSignIn(value)}
+                onSubmit={(value) => handleSave(value)}
             >
                 {({ handleChange, handleSubmit, handleBlur, values, errors, touched }) => (
                     <>
@@ -136,21 +146,20 @@ const EventForm = ({ navigation }) => {
     )
 }
 
-export default EventForm;
+const mapStateToProps = function (state) {
+    const { users, events } = state;
+    return { users, events }
+}
+  
+export default connect(mapStateToProps)(EventForm);
 
 const styles = StyleSheet.create({
     content: {
         paddingHorizontal: RFValue(15),
         paddingTop: RFValue(10)
     },
-    logo:{
-        width: RFValue(80),
-        height: RFValue(80),
-    },
-    labelSignIn:{
+    datePicker:{
         ... Font.Regular,
         ... Font.F13,
-        ... StC.mt20,
-        textAlign:'center'
     }
 })

@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
-import auth from './authReducer';
+import users from './userReducer';
+import events from './eventReducer';
+import tickets from './ticketReducer';
 
 const appReducer = combineReducers({
-    auth
+    users,
+    events,
+    tickets
 })
 
 export const LogOut = () => ({ type: 'SIGN_OUT' })

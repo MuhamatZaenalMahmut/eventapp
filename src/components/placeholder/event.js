@@ -9,15 +9,15 @@ function PlaceholderEvent() {
 
     return (
         <View style={styles.placeholder}>
-            {[0, 1, 2].map((item, index) => (
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
                 <View style={[StC.flexR, {marginBottom: RFValue(15)}]}>
                     <ShimmerPlaceHolder
                         key={index}
                         LinearGradient={LinearGradient}
                         style={{
                             borderRadius: RFValue(10),
-                            width: RFValue(120),
-                            height: RFValue(90),
+                            width: RFValue(90),
+                            height: RFValue(75),
                             marginRight: RFValue(10),
                         }}
                     />

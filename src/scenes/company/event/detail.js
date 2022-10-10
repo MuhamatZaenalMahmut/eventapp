@@ -1,38 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, FlatList, TouchableOpacity, View, Text } from 'react-native';
-import { Fab, Icon, ScrollView } from 'native-base';
+import React, { useState } from 'react';
+import { StyleSheet, Image, View, Text } from 'react-native';
+import { ScrollView } from 'native-base';
 import { BaseContainer, AppBar, ButtonFlex } from '@components';
-import { StC, Colors, Font} from "@styles";
+import { Colors, Font, StC } from "@styles";
+import { generateQrcode, formatDate } from '@constants';
 import { connect } from "react-redux";
 import { RFValue } from 'react-native-responsive-fontsize';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import ticketUtils from '@utils/TicketUtils';
+import moment from 'moment';
 
-function EventDetail({ event, navigation }) {
-    const [isLoading, setIsLoading] = useState(false)
+function EventDetail({ users, events, navigation }) {
+    const [loading, setLoading] = useState(false)
 
-   
+    let event = events.detail
+
+    const handleGet = async () => {
+        let temp = {
+            userID: users.users.key,
+            companyID: event.userID,
+            qrcode: generateQrcode(),
+            status: 0,
+            createdat: moment().format('YYYY-MM-DD HH:mm'),
+            detail: JSON.stringify(event)
+        }
+
+        setLoading(true)
+        await ticketUtils.add(temp)
+
+        setTimeout(() => {
+            setLoading(false)
+            navigation.goBack()
+        }, 1000)
+    }
+
     return (
-        <BaseContainer>
+        <BaseContainer loading={loading}>
             <AppBar title="Detail Event" navigation={navigation}/>
             <ScrollView>
                 <View style={styles.content}>
                     <Image source={{uri: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg'}} style={styles.cover}/>
-                    <Text style={Font.header}>Music Jaxzx</Text>
+                    <Text style={Font.header}>{event.name}</Text>
                     <Text style={Font.title}>About</Text>
-                    <Text style={Font.desc}>567890RTHJK,.VJKGHJKILOYUIOI</Text>
+                    <Text style={Font.desc}>{event.description}</Text>
+                    <Text style={[Font.label, StC.mt20]}>Place</Text>
+                    <Text style={Font.value}>{event.location}</Text>
+                    <View style={[StC.flexR, StC.mt20]}>
+                        <View style={{flex:1}}>
+                            <Text style={Font.label}>Date</Text>
+                            <Text style={Font.value}>{formatDate(event.date)}</Text>
+                        </View>
+                        <View style={{flex:1}}>
+                            <Text style={Font.label}>Time</Text>
+                            <Text style={Font.value}>{event.time} WIB</Text>
+                        </View>
+                    </View>
                 </View>
             </ScrollView>
             <ButtonFlex
                 title={'Get Ticket'} 
-                onPress={()=> handleSubmit()}
+                onPress={()=> handleGet()}
             />
         </BaseContainer>
     )
 }
 
 const mapStateToProps = function (state) {
-    const { event } = state;
-    return { event }
+    const { users, events } = state;
+    return { users, events }
 }
   
 export default connect(mapStateToProps)(EventDetail);

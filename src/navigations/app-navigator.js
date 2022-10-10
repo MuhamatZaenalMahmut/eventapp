@@ -128,12 +128,15 @@ const CompanyTabs = () => {
     );
 };
 
-const AppNavigator = ({ auth }) => {
+const AppNavigator = ({ users }) => {
 
     return (
         <Stack.Navigator>
-            {/* <Stack.Screen name="UsersTabs" component={UsersTabs} options={{headerShown: false}}/> */}
-            <Stack.Screen name="CompanyTabs" component={CompanyTabs} options={{headerShown: false}}/>
+            {users?.users?.type == 'user' ?
+                <Stack.Screen name="UsersTabs" component={UsersTabs} options={{headerShown: false}}/>
+            :
+                <Stack.Screen name="CompanyTabs" component={CompanyTabs} options={{headerShown: false}}/>
+            }
             <Stack.Screen name="EventForm" component={EventForm} options={{headerShown: false}}/>
             <Stack.Screen name="EventDetail" component={EventDetail} options={{headerShown: false}}/>
             <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}}/>
@@ -142,8 +145,8 @@ const AppNavigator = ({ auth }) => {
 };
 
 const mapStateToProps = function (state) {
-    const { auth } = state;
-    return { auth }
+    const { users } = state;
+    return { users }
 }
   
 export default connect(mapStateToProps)(AppNavigator);

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Image, View, StyleSheet, ScrollView, Text } from 'react-native';
-import { Colors, Font, StC } from "@styles";
+import React, { useState } from 'react';
+import { StyleSheet, ScrollView, Text } from 'react-native';
+import { Font, StC } from "@styles";
 import { mailRegex } from "@constants";
-import { BaseContainer, ButtonFlex, FormInputSwitch, AppBar, FormInput } from '@components';
+import { BaseContainer, ButtonFlex, AppBar, FormInput } from '@components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Formik } from 'formik';
-import store from "@stores/store";
-// import authUtils from '@utils/AuthUtils';
+import authUtils from '@utils/AuthUtils';
 import * as yup from 'yup';
 
 const SignIn = ({ navigation }) => {
     
     const [isPassword, setIsPassword]       = useState(false)
+    const [loading, setLoading]             = useState(false)
 
     const dataValidationSchema = yup.object().shape({
         email: yup
@@ -28,14 +28,25 @@ const SignIn = ({ navigation }) => {
         navigation.navigate(uri)
     }
 
+    const handleSignIn = async (value) => {
+       
+        setLoading(true)
+        await authUtils.login(value)
+
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)        
+    }
+
     return (      
-        <BaseContainer>
+        <BaseContainer loading={loading}>
             <AppBar title="SignIn" navigation={navigation}/>
             <ScrollView style={styles.content}>
                 <Formik
                     validationSchema={dataValidationSchema}
                     isValidating={true}
-                    initialValues={{ name:'', email:'', password:'', repassword:''}}
+                    // initialValues={{ email:'', password:''}}
+                    initialValues={{ email:'zencode11@gmail.com', password:'Qwerty'}}
                     onSubmit={(value) => handleSignIn(value)}
                 >
                     {({ handleChange, handleSubmit, handleBlur, values, errors, touched }) => (
@@ -80,11 +91,7 @@ export default SignIn;
 const styles = StyleSheet.create({
     content: {
         paddingHorizontal: RFValue(15),
-        paddingTop: RFValue(20)
-    },
-    logo:{
-        width: RFValue(80),
-        height: RFValue(80),
+        paddingTop: RFValue(150)
     },
     labelSignIn:{
         ... Font.Regular,

@@ -1,96 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, FlatList, TouchableOpacity, View, Text } from 'react-native';
-import { Fab, Icon } from 'native-base';
-import { BaseContainer, CardEvent, PlaceholderEvent, ButtonFab } from '@components';
-import { StC, Colors, Font} from "@styles";
+import { RefreshControl, FlatList, Text } from 'react-native';
+import { BaseContainer, CardEvent, PlaceholderEvent, Empty } from '@components';
+import { Font} from "@styles";
 import { connect } from "react-redux";
 import { RFValue } from 'react-native-responsive-fontsize';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import eventsUtils from '@utils/EventsUtils';
 
-function Home({ event, navigation }) {
-    const [isLoading, setIsLoading] = useState(false)
+function Home({ events, navigation }) {
+    const [loading, setLoading] = useState(false)
 
-    let data = [
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        }
-    ]
+    useEffect(() => {
+        getData()
+    }, [])
 
-    const getDetail = (uri) => {
+    const getData = async () => {
+        setLoading(true)
+        await eventsUtils.all()
+
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+    }
+
+    const getDetail = async (item) => {
+
+        await eventsUtils.detail(item)
         navigation.navigate('EventDetail')
     }
 
     return (
         <BaseContainer>
             <Text style={[Font.header, {marginHorizontal: RFValue(15)}]}>{'List Event'}</Text>
-            {isLoading ? 
+            {loading ? 
                 <PlaceholderEvent/>
                 : 
                 <FlatList
-                    data={data}
-                    renderItem={(({ item, index }) => (
-                        <CardEvent item={item} onPress={()=> getDetail()}/>
+                    data={events?.events}
+                    renderItem={(({ item }) => (
+                        <CardEvent item={item} onPress={()=> getDetail(item)}/>
                     ))}
+                    ListEmptyComponent={
+                        <Empty message="Event not found"/>
+                    }
+                    refreshControl={
+                        <RefreshControl onRefresh={()=> getData()}/>
+                    }
                 />
             }
         </BaseContainer>
@@ -98,8 +52,8 @@ function Home({ event, navigation }) {
 }
 
 const mapStateToProps = function (state) {
-    const { event } = state;
-    return { event }
+    const { events } = state;
+    return { events }
 }
   
 export default connect(mapStateToProps)(Home);

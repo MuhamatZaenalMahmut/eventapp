@@ -30,6 +30,8 @@ target 'eventapp' do
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+  pod 'RNFBFirestore', :path => '../node_modules/@react-native-firebase/firestore'
+
   target 'eventappTests' do
     inherit! :complete
     # Pods for testing

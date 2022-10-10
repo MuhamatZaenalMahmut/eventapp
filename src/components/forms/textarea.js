@@ -12,7 +12,9 @@ const FormTextArea = ({
     value,
     onChangeText,
     placeholder,
-    isRequired
+    isRequired,
+    isError,
+    errorMessage
 }) => {
     return (
 
@@ -25,6 +27,7 @@ const FormTextArea = ({
             onChangeText={text => onChangeText(text)}
             style={[Font.value, {backgroundColor: '#F6F5FA'}]}
         />
+        {isError ? <Text style={Font.errorText}>{errorMessage}</Text> : null}
     </MyView>
     )
 }

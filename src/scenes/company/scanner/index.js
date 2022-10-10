@@ -7,7 +7,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { SignIn } from '@actions';
 import store from "@stores/store";
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { RNCamera } from 'react-native-camera';
+import ticketUtils from '@utils/TicketUtils';
 
 const Scanner = ({ navigation }) => {
     
@@ -15,53 +15,23 @@ const Scanner = ({ navigation }) => {
         navigation.navigate(uri);
     };
 
-    const onBarCodeRead = (e) => {
-        // const {scanning} = this.state
-        // if(scanResult && scanning){
-        //     Vibration.vibrate(50 * 1)
-        //     this.checkQR(scanResult.data)
-        // }
+    const onBarCodeRead = async (e) => {
+        let res = await ticketUtils.scanner(e.data)
 
-        
-        alert(e.data)
+        if(res == 200){
+            alert('6789')
+        }
     }
-
-
 
 
     return (      
         <BaseContainer>
-            {/* <View style={styles.authCont}> */}
             <QRCodeScanner
                 onRead={onBarCodeRead}
-                topContent={
-                <Text style={styles.centerText}>
-                    Go to{' '}
-                    <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-                    your computer and scan the QR code.
-                </Text>
-                }
-                bottomContent={
-                <TouchableOpacity style={styles.buttonTouchable}>
-                    <Text style={styles.buttonText}>OK. Got it!</Text>
-                </TouchableOpacity>
-                }
+                cameraStyle={{width:'100%', height:'100%'}}
             />
-
-            {/* </View> */}
         </BaseContainer>  
     )
 }
 
 export default Scanner;
-
-const styles = StyleSheet.create({
-    authCont: {
-        paddingHorizontal: RFValue(10),
-        paddingTop: RFValue(100)
-    },
-    logo:{
-        width: RFValue(80),
-        height: RFValue(80),
-    }
-})

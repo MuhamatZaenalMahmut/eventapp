@@ -37,7 +37,7 @@ const styles = ({
     },
     input:{
         ... Font.Regular,
-        ... Font.F11,
+        ... Font.F12,
         ... Font.BLACK,
         marginLeft: RFValue(10)
     },

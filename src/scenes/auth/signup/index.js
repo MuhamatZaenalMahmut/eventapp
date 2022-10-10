@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, Text } from 'react-native';
 import { Font, StC } from "@styles";
-import { mailRegex, generateUserId } from "@constants";
+import { mailRegex } from "@constants";
 import { BaseContainer, ButtonFlex, FormInputSwitch, AppBar, FormInput } from '@components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Formik } from 'formik';
@@ -13,11 +13,12 @@ const SignUp = ({ navigation }) => {
     const [isSwitch, setIsSwitch]           = useState(false)
     const [isPassword, setIsPassword]       = useState(false)
     const [isRePassword, setIsRePassword]   = useState(false)
+    const [loading, setLoading]             = useState(false)
 
     const dataValidationSchema = yup.object().shape({
         name: yup
             .string()
-            .min(5, ({ min }) => `Name ${min} character`)
+            .min(3, ({ min }) => `Name ${min} character`)
             .required('Name is required'),
         email: yup
             .string()
@@ -38,15 +39,20 @@ const SignUp = ({ navigation }) => {
         navigation.navigate(uri)
     }
 
-    const handleSignIn = async (value) => {
+    const handleSignUp = async (value) => {
         value.type  = isSwitch ? 'company' : 'user',
-        value.key   = generateUserId()
 
-        await authUtils.signin(value)
+        setLoading(true)
+        await authUtils.register(value)
+
+        setTimeout(() => {
+            setLoading(false)
+            navigation.navigate('SignIn')
+        }, 1000)        
     }
 
     return (      
-        <BaseContainer>
+        <BaseContainer loading={loading}>
             <AppBar title="SignUp Form" navigation={navigation}/>
             <ScrollView style={styles.content}>
                 <FormInputSwitch label={['User', 'Event Organizer']} isSwitch={isSwitch} onPress={()=> {setIsSwitch(!isSwitch)}} style={[StC.mb20]}/>
@@ -54,7 +60,7 @@ const SignUp = ({ navigation }) => {
                     validationSchema={dataValidationSchema}
                     isValidating={true}
                     initialValues={{ name:'', email:'', password:'', repassword:''}}
-                    onSubmit={(value) => handleSignIn(value)}
+                    onSubmit={(value) => handleSignUp(value)}
                 >
                     {({ handleChange, handleSubmit, handleBlur, values, errors, touched }) => (
                         <>
@@ -120,10 +126,6 @@ const styles = StyleSheet.create({
     content: {
         paddingHorizontal: RFValue(15),
         paddingTop: RFValue(20)
-    },
-    logo:{
-        width: RFValue(80),
-        height: RFValue(80),
     },
     labelSignIn:{
         ... Font.Regular,

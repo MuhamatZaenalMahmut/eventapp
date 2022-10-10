@@ -37,7 +37,8 @@ const styles = ({
     cover:{
         width: RFValue(90),
         height: RFValue(75),
-        borderRadius: RFValue(10)
+        borderRadius: RFValue(10),
+        backgroundColor: Colors.GRAY_SOFT
     },
     fab:{
         marginBottom: RFValue(60),

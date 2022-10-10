@@ -27,25 +27,27 @@ module.exports = {
             title: 'Language',
             icon: 'translate',
             type: MaterialCommunityIcons,
-            menu: ''
         },
         {
             title: 'Setting',
             icon: 'settings-outline',
             type: Ionicons,
-            menu: ''
         },
         {
             title: 'FAQ',
             icon: 'ios-chatbubbles-outline',
             type: Ionicons,
-            menu: ''
         },
         {
             title: 'Feedback',
             icon: 'question',
             type: Octicons,
-            menu: ''
+        },
+        {
+            title: 'Logout',
+            icon: 'logout',
+            type: MaterialCommunityIcons,
+            menu: 'logout'
         },
     ],
 }

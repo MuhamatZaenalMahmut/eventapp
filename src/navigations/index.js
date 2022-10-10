@@ -7,25 +7,24 @@ import AuthNavigator from "./auth-navigator";
 
 const Stack = createStackNavigator();
 
-const RootNavigator = ({ auth }) => {
+const RootNavigator = ({ users }) => {
 
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="App" component={AppNavigator} options={{headerShown: false}}/>
-                {/* {auth.isLoggin ?
-                    <Stack.Screen name="App" component={AppNavigator}/>
-                    : */}
-                    {/* <Stack.Screen name="Auth" component={AuthNavigator} options={{headerShown: false}}/> */}
-                {/* } */}
+                {users.isLoggedIn ?
+                    <Stack.Screen name="App" component={AppNavigator} options={{headerShown: false}}/>
+                    :
+                    <Stack.Screen name="Auth" component={AuthNavigator} options={{headerShown: false}}/>
+                }
             </Stack.Navigator>
         </NavigationContainer>
     );
 };
 
 const mapStateToProps = function (state) {
-    const { auth } = state;
-    return { auth }
+    const { users } = state;
+    return { users }
 }
 
 export default connect(mapStateToProps)(RootNavigator);

@@ -64,11 +64,11 @@ export const phoneRegex = () => {
     return /^08[1-9][0-9]{7,10}$/
 }
 
-export const generateUserId = () => {
+export const generateQrcode = () => {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < 15; i++ ) {
+    for ( var i = 0; i < 35; i++ ) {
         result += characters.charAt(Math.floor(Math.random() * 
         charactersLength));
     }
@@ -78,4 +78,42 @@ export const generateUserId = () => {
 
 export const required = (isRequired) => {
     return isRequired ? <Text style={Font.required}>*</Text> : null
+}
+
+export const arrEvent = (snapshot) => {
+    const arr = [];
+    snapshot.forEach((res) => {
+        const { userID, name, description, date, time, image, location, price } = res.data();
+        arr.push({
+            key: res.id,
+            userID,
+            name,
+            description,
+            date,
+            time,
+            image,
+            location,
+            price
+        });
+    });
+
+    return arr
+}
+
+export const arrTicket = (snapshot) => {
+    const arr = [];
+    snapshot.forEach((res) => {
+        const { userID, companyID, qrcode, status, detail, createdat } = res.data();
+        arr.push({
+            key: res.id,
+            userID,
+            companyID,
+            qrcode,
+            status,
+            detail,
+            createdat,
+        });
+    });
+
+    return arr
 }

@@ -1,98 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, FlatList, TouchableOpacity, View, Text } from 'react-native';
-import { Fab, Icon } from 'native-base';
-import { BaseContainer, CardTicket, PlaceholderEvent, ButtonFab } from '@components';
-import { StC, Colors, Font} from "@styles";
+import { FlatList, RefreshControl, Text } from 'react-native';
+import { BaseContainer, CardTicket, PlaceholderTicket, Empty } from '@components';
+import { Font} from "@styles";
 import { connect } from "react-redux";
 import { RFValue } from 'react-native-responsive-fontsize';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import ticketUtils from '@utils/TicketUtils';
 
-function Ticket({ event, navigation }) {
-    const [isLoading, setIsLoading] = useState(false)
+function Ticket({ users, tickets, navigation }) {
+    const [loading, setLoading] = useState(false)
 
-    let data = [
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        },
-        {
-            name: 'Music Jaseee',
-            cover: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg',
-            date: '2022-09-15',
-            time: '20:20',
-            location: 'Surabaya'
-        }
-    ]
+    useEffect(() => {
+        getData()
+    }, [])
 
-    const getDetail = (uri) => {
-        navigation.navigate('TicketDetail')
+    const getData = async () => {
+        setLoading(true)
+        await ticketUtils.byUserId(users?.users?.key)
+
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)
     }
+
 
     return (
         <BaseContainer>
             <Text style={[Font.header, {marginHorizontal: RFValue(15)}]}>{'List Ticket'}</Text>
-            {isLoading ? 
-                <PlaceholderEvent/>
-                : 
+            {loading ? 
+                <PlaceholderTicket/>
+                :
+                tickets?.tickets?.length == 0 ? <Empty message="Ticket not found"/> :
                 <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    data={data}
+                    data={tickets?.tickets}
                     renderItem={(({ item, index }) => (
                         <CardTicket item={item}/>
                     ))}
+                    refreshControl={
+                        <RefreshControl onRefresh={()=> getData()}/>
+                    }
                 />
             }
         </BaseContainer>
@@ -100,8 +47,8 @@ function Ticket({ event, navigation }) {
 }
 
 const mapStateToProps = function (state) {
-    const { event } = state;
-    return { event }
+    const { users, tickets } = state;
+    return { users, tickets }
 }
   
 export default connect(mapStateToProps)(Ticket);

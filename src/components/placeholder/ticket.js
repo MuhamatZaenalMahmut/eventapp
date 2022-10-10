@@ -10,49 +10,17 @@ function PlaceholderTicket() {
     return (
         <View style={styles.placeholder}>
             {[0, 1, 2].map((item, index) => (
-                <View style={[StC.flexR, {marginBottom: RFValue(15)}]}>
+                <View>
                     <ShimmerPlaceHolder
                         key={index}
                         LinearGradient={LinearGradient}
                         style={{
-                            borderRadius: RFValue(10),
-                            width: RFValue(120),
-                            height: RFValue(90),
-                            marginRight: RFValue(10),
+                            borderRadius: RFValue(15),
+                            width: RFValue(250),
+                            height: RFValue(430),
+                            marginRight: RFValue(15),
                         }}
                     />
-                    <View>
-                        <ShimmerPlaceHolder
-                            key={index}
-                            LinearGradient={LinearGradient}
-                            style={{
-                                borderRadius: RFValue(5),
-                                width: RFValue(160),
-                                height: RFValue(8),
-                                marginTop: RFValue(10)
-                            }}
-                        />
-                        <ShimmerPlaceHolder
-                            key={index}
-                            LinearGradient={LinearGradient}
-                            style={{
-                                borderRadius: RFValue(5),
-                                width: RFValue(130),
-                                height: RFValue(8),
-                                marginTop: RFValue(15),
-                            }}
-                        />
-                        <ShimmerPlaceHolder
-                            key={index}
-                            LinearGradient={LinearGradient}
-                            style={{
-                                borderRadius: RFValue(5),
-                                width: RFValue(90),
-                                height: RFValue(8),
-                                marginTop: RFValue(15),
-                            }}
-                        />
-                    </View>
                 </View>
             ))}
         </View>
@@ -64,6 +32,7 @@ export default PlaceholderTicket;
 
 const styles = StyleSheet.create({
     placeholder:{
+        ... StC.flexR,
         marginBottom: RFValue(5), 
         paddingHorizontal: RFValue(15)
     },

@@ -1,36 +1,60 @@
 import React from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import { Icon } from 'native-base';
 import { BaseContainer } from '@components';
 import { StC, Font, Colors } from "@styles";
 import { connect } from "react-redux";
 import { menu } from "./menu.js";
 import { RFValue } from 'react-native-responsive-fontsize';
+import { SignOut } from '@actions';
+import store from "@stores/store";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function Profile({ navigation, users }) {
+function Profile({ users }) {
 
     const getDetail = async (menu) => {
-        alert('Coming Soon')
+        if(menu == 'logout'){
+            Alert.alert(
+                "Logout",
+                'Are you sure you want to exit the application',
+                [
+                    {
+                        text: 'No',
+                    },
+                    {
+                        text: 'Yes',
+                        onPress: () => store.dispatch(SignOut())
+                    },
+                ],
+                { cancelable: false }
+            )
+        } else {
+            alert('Coming Soon')
+        }
     }
     
+    let arr = menu
+    if(users.users?.type == 'company'){
+        arr = menu.filter(x => !x.isUser)
+    }
+
     return (
         <BaseContainer>
             <StatusBar barStyle="light-content" backgroundColor={Colors.BLACK} />
             <View style={styles.header}>
                 <Icon as={MaterialCommunityIcons} name={'account-circle'} color={Colors.WHITE} size={RFValue(10)} style={{marginRight: RFValue(10)}}/>
                 <View>
-                    <Text style={styles.name}>Zen</Text>
-                    <Text style={styles.email}>muhamatzaenal@gmail.com</Text>
+                    <Text style={styles.name}>{users.users?.name}</Text>
+                    <Text style={styles.email}>{users.users?.email}</Text>
                 </View>
                 
             </View>
             <FlatList
-                data={menu}
+                data={arr}
                 renderItem={(({ item }) => (
                     <TouchableOpacity onPress={()=> getDetail(item.menu)} style={styles.card}>
                         <Icon as={item.type} name={item.icon} color={Colors.GRAY} size={RFValue(5)} style={{width: RFValue(30)}}/>
-                        <Text style={styles.title}>{item.title}</Text>
+                        <Text style={Font.label}>{item.title}</Text>
                     </TouchableOpacity>
                 ))}
             />
@@ -69,9 +93,4 @@ const styles = StyleSheet.create({
         marginHorizontal: RFValue(15),
         alignItems: 'center',
     },
-    title:{
-        ... Font.BLACK,
-        ... Font.F13,
-        ... Font.Medium
-    }
 })

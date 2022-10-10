@@ -1,31 +1,46 @@
 
-import { now_playing, popular, top_rated, upcoming, detail } from "@constants/apiMovies";
 import { showToast } from "@constants";
-import { Movies_now_playing, Movies_popular, Movies_top_rated, Movies_upcoming, Movies_detail } from '@actions';
+import { SignIn } from '@actions';
 import store from "@stores/store";
-import AsyncStorage from "@react-native-community/async-storage";
+import firestore from '@react-native-firebase/firestore';
 
 class AuthUtils {
 
-    async signin(params) {
+    async register(params) {
 
-        // alert(JSON.stringify(params))
-        const value = await AsyncStorage.getItem('users');
-        
-        // let arr = []
-        // if(value){
+        await firestore()
+        .collection('users')
+        .add(params)
+        .then(() => {
+            showToast('Create Account Success')
+        });
+    }
 
-        //     alert(JSON.stringify(arr))
-        // } else {
-        //     arr = [params]
-        // }
+    async login(params) {
 
-        // try {
-            // await AsyncStorage.setItem('users', params);
-        //     showToast('Register success')
-        // } catch (error) {
-        //     showToast('Register failed')
-        // }
+        const snapshot = await 
+        firestore()
+        .collection('users')
+        .where('email', '==', params.email)
+        .where('password', '==', params.password)
+        .get()
+
+        const arr = [];
+        snapshot.forEach((res) => {
+            const { name, email, type } = res.data();
+            arr.push({
+                key: res.id,
+                name,
+                email,
+                type
+            });
+        });
+
+        if(arr.length == 0){
+            showToast('Account Not Found')
+        } else {
+            store.dispatch(SignIn(arr[0]))
+        }
     }
 }
 

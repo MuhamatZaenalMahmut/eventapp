@@ -1,9 +1,11 @@
 import React, { Fragment } from "react";
 import { StatusBar, SafeAreaView, StyleSheet } from 'react-native';
 import { Colors } from "@styles";
+import { Loading } from "@components";
 
 const BaseContainer = ({
     children, 
+    loading
 }) => {
         
     return (
@@ -11,6 +13,7 @@ const BaseContainer = ({
             <SafeAreaView style={styles.bottomSafeArea}>
                 <StatusBar barStyle="dark-content" backgroundColor={Colors.BACKGROUND} />
                 {children}
+                <Loading loading={loading}/>
             </SafeAreaView>
         </Fragment>
     )
