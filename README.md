@@ -5,7 +5,7 @@
 - Create Multiple Event
 - Search Event for User
 - Get Ticket Event
-- Attendance Scan Ticker (Qrcode)
+- Attendance Scan Ticket (Qrcode)
 
 ## Tech
 - Redux (Management State)
