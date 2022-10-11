@@ -49,8 +49,8 @@ const SignIn = ({ navigation }) => {
                 <Formik
                     validationSchema={dataValidationSchema}
                     isValidating={true}
-                    // initialValues={{ email:'', password:''}}
-                    initialValues={{ email:'zencode11@gmail.com', password:'Qwerty'}}
+                    initialValues={{ email:'', password:''}}
+                    // initialValues={{ email:'zencode11@gmail.com', password:'Qwerty'}}
                     onSubmit={(value) => handleSignIn(value)}
                 >
                     {({ handleChange, handleSubmit, handleBlur, values, errors, touched }) => (

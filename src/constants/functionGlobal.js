@@ -66,9 +66,9 @@ export const phoneRegex = () => {
 
 export const generateQrcode = () => {
     var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     var charactersLength = characters.length;
-    for ( var i = 0; i < 35; i++ ) {
+    for ( var i = 0; i < 10; i++ ) {
         result += characters.charAt(Math.floor(Math.random() * 
         charactersLength));
     }

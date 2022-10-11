@@ -47,7 +47,7 @@ class TicketUtils {
         } else {
             this.detail(arr[0])
             this.update(arr[0].key)
-            return 200
+            alert('Success')
         }
     }
 
