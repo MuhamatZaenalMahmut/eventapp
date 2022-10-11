@@ -22,8 +22,9 @@ function Event({ users, events, navigation }) {
         }, 1000) 
     }
 
-    const getDetail = (uri) => {
-        // navigation.navigate('EventForm')
+    const getDetail = async (item) => {
+        await eventsUtils.detail(item)
+        navigation.navigate('EventForm')
     }
 
     return (
@@ -35,7 +36,7 @@ function Event({ users, events, navigation }) {
                 <FlatList
                     data={events?.events}
                     renderItem={(({ item, index }) => (
-                        <CardEvent item={item} onPress={()=> getDetail()}/>
+                        <CardEvent item={item} onPress={()=> getDetail(item)}/>
                     ))}
                     ListEmptyComponent={
                         <Empty message="Event not found"/>
@@ -45,7 +46,7 @@ function Event({ users, events, navigation }) {
                     }
                 />
             }
-            <ButtonFab label="Add Event" onPress={()=> navigation.navigate('EventForm')}/>
+            <ButtonFab label="Add Event" onPress={()=> {navigation.navigate('EventForm'); eventsUtils.detail('')}}/>
         </BaseContainer>
     )
 }

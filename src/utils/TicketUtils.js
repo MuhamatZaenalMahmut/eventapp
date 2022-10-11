@@ -59,7 +59,7 @@ class TicketUtils {
           status: 1,
         })
         .then(() => {
-          console.log('User updated!');
+          console.log('Ticket updated!');
         });
     }
 }

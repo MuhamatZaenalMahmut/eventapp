@@ -10,7 +10,7 @@ function CardEvent({ item, onPress }) {
    
     return (
         <TouchableOpacity onPress={onPress} style={styles.card}>
-            <Image source={{uri: item.cover}} style={styles.cover}/>
+            <Image source={{uri: item.image}} style={styles.cover}/>
             <View style={{paddingLeft: RFValue(10), flex:1}}>
                 <Text style={styles.title} numberOfLines={2}>{item.name}</Text>
                 <View style={[StC.flexR, {alignItems:'center'}]}>

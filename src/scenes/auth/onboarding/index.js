@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
-import { Image, View, StyleSheet, ScrollView, Text } from 'react-native';
-import { Colors, StC } from "@styles";
+import React from 'react';
+import { Image, View, StyleSheet, Text } from 'react-native';
+import { StC, Font } from "@styles";
 import { Icons } from "@assets";
 import { BaseContainer, ButtonFlex } from '@components';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { SignIn } from '@actions';
-import store from "@stores/store";
 
 const OnBoarding = ({ navigation }) => {
     
@@ -16,8 +14,12 @@ const OnBoarding = ({ navigation }) => {
     return (      
         <BaseContainer>
             <View style={styles.authCont}>
-                <Image source={Icons.logo} style={styles.logo}/>
-                <View style={[StC.flexR, {marginTop: RFValue(150)}]}>
+                <View style={styles.text}>
+                    <Image source={Icons.logo} style={styles.logo}/>
+                    <Text style={Font.header}>eventApp</Text>
+                    <Text style={Font.label}>Create an account with us & enjoy all the our exciting event</Text>
+                </View>
+                <View style={[StC.flexR, {marginTop: RFValue(80)}]}>
                     <ButtonFlex
                         style={[StC.mT10, {flex:1}]}
                         title={'SignIn'} 
@@ -43,7 +45,11 @@ const styles = StyleSheet.create({
         paddingTop: RFValue(100)
     },
     logo:{
-        width: RFValue(80),
-        height: RFValue(80),
+        width: RFValue(40),
+        height: RFValue(40),
+    },
+    text:{
+        marginTop: RFValue(60),
+        marginHorizontal: RFValue(15)
     }
 })

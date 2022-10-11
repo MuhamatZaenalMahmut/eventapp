@@ -106,6 +106,7 @@ export default StyleSheet.create({
         fontFamily:'GothamRounded-Medium',
         fontSize: RFValue(14),
         color: Colors.BLACK,
+        marginBottom: RFValue(5)
     },
     value:{
         fontFamily:'GothamRounded-Light',

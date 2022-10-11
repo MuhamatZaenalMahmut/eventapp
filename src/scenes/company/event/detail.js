@@ -38,7 +38,7 @@ function EventDetail({ users, events, navigation }) {
             <AppBar title="Detail Event" navigation={navigation}/>
             <ScrollView>
                 <View style={styles.content}>
-                    <Image source={{uri: 'https://media.goopps.com/upload/module/b_event_type/372x247_event-type-1581469983-2.jpeg'}} style={styles.cover}/>
+                    <Image source={{uri: event.image}} style={styles.cover}/>
                     <Text style={Font.header}>{event.name}</Text>
                     <Text style={Font.title}>About</Text>
                     <Text style={Font.desc}>{event.description}</Text>

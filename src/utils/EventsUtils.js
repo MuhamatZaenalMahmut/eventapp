@@ -17,6 +17,18 @@ class EventsUtils {
         });
     }
 
+    async update(params, key) {
+
+        await firestore()
+        .collection('events')
+        .doc(key)
+        .update(params)
+        .then(() => {
+            showToast('Updated Event Success')
+            this.byUserId(params.userID)
+        });
+    }
+
     async all() {
         const snapshot = await 
         firestore()
@@ -24,6 +36,18 @@ class EventsUtils {
         .get()
 
         store.dispatch(Event(arrEvent(snapshot)))
+    }
+
+    async remove(params, userID) {
+        firestore()
+        .collection('events')
+        .doc(params)
+        .delete()
+        .then(() => {
+            showToast('Remove Event Success')
+            this.byUserId(userID)
+        });
+
     }
 
     async byUserId(params) {

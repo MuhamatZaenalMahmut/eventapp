@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, Text } from 'react-native';
+import { StyleSheet, ScrollView, Text, Image } from 'react-native';
 import { Font, StC } from "@styles";
 import { mailRegex } from "@constants";
+import { Icons } from "@assets";
 import { BaseContainer, ButtonFlex, AppBar, FormInput } from '@components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Formik } from 'formik';
@@ -42,6 +43,9 @@ const SignIn = ({ navigation }) => {
         <BaseContainer loading={loading}>
             <AppBar title="SignIn" navigation={navigation}/>
             <ScrollView style={styles.content}>
+                <Image source={Icons.logo} style={styles.logo}/>
+                <Text style={Font.header}>eventApp</Text>
+                <Text style={[Font.label, StC.mb40]}>Create an account with us & enjoy all the our exciting event</Text>
                 <Formik
                     validationSchema={dataValidationSchema}
                     isValidating={true}
@@ -91,12 +95,16 @@ export default SignIn;
 const styles = StyleSheet.create({
     content: {
         paddingHorizontal: RFValue(15),
-        paddingTop: RFValue(150)
+        paddingTop: RFValue(70)
     },
     labelSignIn:{
         ... Font.Regular,
         ... Font.F13,
         ... StC.mt20,
         textAlign:'center'
-    }
+    },
+    logo:{
+        width: RFValue(40),
+        height: RFValue(40),
+    },
 })
