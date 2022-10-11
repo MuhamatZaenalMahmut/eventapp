@@ -11,7 +11,7 @@ import * as yup from 'yup';
 
 const SignIn = ({ navigation }) => {
     
-    const [isPassword, setIsPassword]       = useState(false)
+    const [isPassword, setIsPassword]       = useState(true)
     const [loading, setLoading]             = useState(false)
 
     const dataValidationSchema = yup.object().shape({

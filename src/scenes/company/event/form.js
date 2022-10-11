@@ -47,9 +47,9 @@ const EventForm = ({ navigation, users, events }) => {
 
     const handleSave = async (value) => {
 
-        if(description && price && date && time && photoUri){
+        if(description && date && time && photoUri){
             value.description   = description
-            value.price         = price
+            value.price         = price ? price : 0
             value.date          = moment(date).format('YYYY-MM-DD')
             value.time          = time
             value.userID        = users.users.key

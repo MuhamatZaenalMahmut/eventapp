@@ -11,8 +11,8 @@ import * as yup from 'yup';
 const SignUp = ({ navigation }) => {
     
     const [isSwitch, setIsSwitch]           = useState(false)
-    const [isPassword, setIsPassword]       = useState(false)
-    const [isRePassword, setIsRePassword]   = useState(false)
+    const [isPassword, setIsPassword]       = useState(true)
+    const [isRePassword, setIsRePassword]   = useState(true)
     const [loading, setLoading]             = useState(false)
 
     const dataValidationSchema = yup.object().shape({
@@ -43,11 +43,11 @@ const SignUp = ({ navigation }) => {
         value.type  = isSwitch ? 'company' : 'user',
 
         setLoading(true)
-        await authUtils.register(value)
+        let res = await authUtils.register(value)
 
         setTimeout(() => {
             setLoading(false)
-            navigation.navigate('SignIn')
+            res == 400 ? null : navigation.navigate('SignIn')
         }, 1000)        
     }
 

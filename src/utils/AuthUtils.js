@@ -8,12 +8,30 @@ class AuthUtils {
 
     async register(params) {
 
-        await firestore()
+        const snapshot = await 
+        firestore()
         .collection('users')
-        .add(params)
-        .then(() => {
-            showToast('Create Account Success')
+        .where('email', '==', params.email)
+        .get()
+
+        const arr = [];
+        snapshot.forEach((res) => {
+            arr.push({
+                key: res.id,
+            });
         });
+
+        if(arr.length == 0){
+            await firestore()
+            .collection('users')
+            .add(params)
+            .then(() => {
+                showToast('Create Account Success')
+            });
+        } else {
+            showToast('Email already registered in another account')
+            return 400
+        }
     }
 
     async login(params) {
